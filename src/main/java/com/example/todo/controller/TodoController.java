@@ -19,7 +19,10 @@ public class TodoController {
     }
 
     @GetMapping
-    public List<Todo> getAllTodos() {
+    public List<Todo> getAllTodos(@RequestParam(required = false) String owner) {
+        if (owner != null && !owner.isBlank()) {
+            return todoRepository.findByOwner(owner);
+        }
         return todoRepository.findAll();
     }
 
